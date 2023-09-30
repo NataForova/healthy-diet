@@ -8,7 +8,7 @@ import javax.persistence.GenerationType
 
 @Table("users")
 data class Users(val email : String,
-                 val username: String,
+                 val userName: String,
                  val firstName: String,
                  val last_name: String,
                  var password: String,
@@ -17,7 +17,8 @@ data class Users(val email : String,
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator="ID_SEQUENCE")
     var id: Long? = null
-        private set
 }
 
-interface  UsersRepository : CrudRepository<Users, Int>
+interface  UsersRepository : CrudRepository<Users, Int> {
+    fun findByEmail(email: String) : Users
+}
