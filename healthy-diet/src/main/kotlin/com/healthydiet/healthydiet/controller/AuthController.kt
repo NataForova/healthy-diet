@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("api/auth")
 class AuthController(private val tokenService: TokenService, private val usersService: UsersService) {
-    @PostMapping("/token/login")
+    @PostMapping("/token/login/")
     fun login(@RequestBody request: LoginRequest) : ResponseEntity<AuthToken> {
         val user = usersService.findByEmail(request.email)
         val token = tokenService.createToken(user);

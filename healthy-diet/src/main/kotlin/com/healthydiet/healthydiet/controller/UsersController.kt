@@ -16,5 +16,8 @@ class UsersController(val service: UsersService) {
     fun list() : List<Users> = service.findAll()
 
     @PostMapping("/")
-    fun tag(@RequestBody request: CreateUserRequest) : Users = service.createUser(request)
+    fun createUser(@RequestBody request: CreateUserRequest) : Users = service.createUser(request)
+
+    @GetMapping("/me/")
+    fun getCurrentUser() : Users = service.getCurrentUser();
 }

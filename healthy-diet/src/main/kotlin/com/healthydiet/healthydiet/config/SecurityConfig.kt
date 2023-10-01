@@ -23,7 +23,7 @@ class SecurityConfig(private val tokenService: TokenService) {
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         // Define public and private routes
         http.authorizeHttpRequests()
-            .requestMatchers(HttpMethod.POST, "/api/auth/token/login").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/auth/token/login/").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/users/").permitAll()
             .requestMatchers("/api/**").authenticated()
             .anyRequest().permitAll() // In case you have a frontend
@@ -50,7 +50,7 @@ class SecurityConfig(private val tokenService: TokenService) {
     fun corsConfigurationSource(): CorsConfigurationSource {
         // allow localhost for dev purposes
         val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf("http://localhost:3000", "http://localhost:8080")
+        configuration.allowedOrigins = listOf("http://localhost:3000", "http://172.23.0.1", "http://localhost:8080", "http://localhost", "http://localhost:8081")
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE")
         configuration.allowedHeaders = listOf("authorization", "content-type")
         val source = UrlBasedCorsConfigurationSource()
