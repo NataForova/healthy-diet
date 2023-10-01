@@ -19,6 +19,6 @@ data class Users(val email : String,
     var id: Long? = null
 }
 
-interface  UsersRepository : CrudRepository<Users, Int> {
+interface  UsersRepository : CrudRepository<Users, Long> {
     fun findByEmail(email: String) : Users
 }

@@ -14,7 +14,7 @@ import java.io.IOException
 @Service
 data class UsersService(val usersRepository: UsersRepository) {
     fun findAll() : List<Users> = usersRepository.findAll().toList()
-    fun findById(id: Int) : Users = usersRepository.findById(id).orElseThrow {IOException("Can't find user with id $id")}
+    fun findById(id: Long) : Users = usersRepository.findById(id).orElseThrow {IOException("Can't find user with id $id")}
     fun findByEmail(email: String) : Users = usersRepository.findByEmail(email);
 
     @Transactional
@@ -38,8 +38,8 @@ data class UsersService(val usersRepository: UsersRepository) {
 
     fun getCurrentUser() : Users {
         val authentication: Authentication = SecurityContextHolder.getContext().authentication
-        val currentUserDetails = authentication.principal as UserDetails
-        val email = currentUserDetails.username
+        val currentUserDetails = authentication.principal as Users
+        val email = currentUserDetails.email
         var user = usersRepository.findByEmail(email)
         user.password = ""
         return user

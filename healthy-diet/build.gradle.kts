@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     war
-    id("org.springframework.boot") version "3.1.2"
+    id("org.springframework.boot") version "2.7.4"
     id("io.spring.dependency-management") version "1.1.2"
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
@@ -26,9 +26,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation ("javax.persistence:javax.persistence-api:2.2")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.security:spring-security-oauth2-jose:5.6.1")
+    implementation("org.springframework.security:spring-security-oauth2-jose")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     runtimeOnly("org.postgresql:postgresql")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

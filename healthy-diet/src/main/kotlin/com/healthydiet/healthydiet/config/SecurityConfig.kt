@@ -5,16 +5,19 @@ import com.healthydiet.healthydiet.exception.InvalidBearerTokenException
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthenticationToken
+import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication
+import org.springframework.security.web.authentication.HttpStatusEntryPoint
 
 @Configuration
 @EnableWebSecurity
@@ -23,11 +26,13 @@ class SecurityConfig(private val tokenService: TokenService) {
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         // Define public and private routes
         http.authorizeHttpRequests()
-            .requestMatchers(HttpMethod.POST, "/api/auth/token/login/").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/users/").permitAll()
-            .requestMatchers("/api/**").authenticated()
-            .anyRequest().permitAll() // In case you have a frontend
 
+            .antMatchers(HttpMethod.POST, "/api/auth/token/login/").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/users/").permitAll()
+            .antMatchers("/api/**").authenticated()
+
+        http  .exceptionHandling()
+            .authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
         // Configure JWT
         http.oauth2ResourceServer().jwt()
         http.authenticationManager { auth ->
@@ -50,9 +55,9 @@ class SecurityConfig(private val tokenService: TokenService) {
     fun corsConfigurationSource(): CorsConfigurationSource {
         // allow localhost for dev purposes
         val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf("http://localhost:3000", "http://172.23.0.1", "http://localhost:8080", "http://localhost", "http://localhost:8081")
+        configuration.allowedOrigins = listOf("*")
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE")
-        configuration.allowedHeaders = listOf("authorization", "content-type")
+        configuration.allowedHeaders = listOf("*")
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source
