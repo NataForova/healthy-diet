@@ -5,10 +5,12 @@ import com.healthydiet.healthydiet.exception.InvalidBearerTokenException
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
-import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer.JwtConfigurer
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken
@@ -16,8 +18,7 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication
-import org.springframework.security.web.authentication.HttpStatusEntryPoint
+import java.util.*
 
 @Configuration
 @EnableWebSecurity
@@ -25,20 +26,20 @@ class SecurityConfig(private val tokenService: TokenService) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         // Define public and private routes
-        http.authorizeHttpRequests()
-
+        http
+            .authorizeHttpRequests()
             .antMatchers(HttpMethod.POST, "/api/auth/token/login/").permitAll()
             .antMatchers(HttpMethod.POST, "/api/users/").permitAll()
-            .antMatchers("/api/**").authenticated()
+            .antMatchers("/api/**")
+            .authenticated()
 
-        http  .exceptionHandling()
-            .authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-        // Configure JWT
-        http.oauth2ResourceServer().jwt()
+        http.cors()
+            .and() //.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+            .oauth2ResourceServer().jwt()
         http.authenticationManager { auth ->
             val jwt = auth as BearerTokenAuthenticationToken
             val user = tokenService.parseToken(jwt.token) ?: throw InvalidBearerTokenException("Invalid token")
-            UsernamePasswordAuthenticationToken(user, "", listOf(SimpleGrantedAuthority("USER")))
+            UsernamePasswordAuthenticationToken(user, "", null)
         }
 
         // Other configuration
@@ -52,8 +53,7 @@ class SecurityConfig(private val tokenService: TokenService) {
     }
 
     @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        // allow localhost for dev purposes
+    fun corsConfigurationSource(): CorsConfigurationSource? {
         val configuration = CorsConfiguration()
         configuration.allowedOrigins = listOf("*")
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE")
