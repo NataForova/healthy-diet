@@ -1,6 +1,6 @@
 package com.healthydiet.healthydiet.controller
 
-import com.healthydiet.healthydiet.UsersService
+import com.healthydiet.healthydiet.service.UsersService
 import com.healthydiet.healthydiet.models.request.CreateUserRequest
 import com.healthydiet.healthydiet.models.Users
 import org.springframework.web.bind.annotation.GetMapping

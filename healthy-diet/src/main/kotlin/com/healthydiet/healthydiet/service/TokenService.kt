@@ -1,4 +1,4 @@
-package com.healthydiet.healthydiet
+package com.healthydiet.healthydiet.service
 
 import com.healthydiet.healthydiet.models.Users
 import org.springframework.security.oauth2.jwt.*

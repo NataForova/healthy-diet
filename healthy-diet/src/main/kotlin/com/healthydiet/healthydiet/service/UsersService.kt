@@ -1,11 +1,11 @@
-package com.healthydiet.healthydiet
+package com.healthydiet.healthydiet.service
 
 import com.healthydiet.healthydiet.models.Users
 import com.healthydiet.healthydiet.models.UsersRepository
 import com.healthydiet.healthydiet.models.request.CreateUserRequest
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.io.IOException
@@ -40,7 +40,11 @@ data class UsersService(val usersRepository: UsersRepository) {
         val authentication: Authentication = SecurityContextHolder.getContext().authentication
         val currentUserDetails = authentication.principal as Users
         val email = currentUserDetails.email
+        val password = currentUserDetails.password
         var user = usersRepository.findByEmail(email)
+        if (user.password != password) {
+            throw BadCredentialsException("Wrong password!")
+        }
         user.password = ""
         return user
     }

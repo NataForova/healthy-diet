@@ -1,7 +1,10 @@
 package com.healthydiet.healthydiet.models
 
 import org.springframework.data.annotation.Id
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.relational.core.mapping.Table
+import org.springframework.data.repository.CrudRepository
 
 import javax.persistence.*
 
@@ -20,5 +23,7 @@ class Recipe(val name: String, imageLink: String, text: String, cookingTime: Str
     @JoinColumn(name = "tag_id")
     var ingridients: MutableList<Ingredient> = mutableListOf();
 
-
+}
+interface RecipeRepository: CrudRepository<Recipe, Long> {
+    fun findAllBy(pageable: Pageable): Page<Recipe>
 }

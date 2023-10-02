@@ -1,7 +1,7 @@
 package com.healthydiet.healthydiet.controller
 
-import com.healthydiet.healthydiet.TokenService
-import com.healthydiet.healthydiet.UsersService
+import com.healthydiet.healthydiet.service.TokenService
+import com.healthydiet.healthydiet.service.UsersService
 import com.healthydiet.healthydiet.models.request.AuthToken
 import com.healthydiet.healthydiet.models.request.LoginRequest
 import org.springframework.http.ResponseEntity

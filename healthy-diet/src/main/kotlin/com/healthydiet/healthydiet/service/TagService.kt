@@ -1,4 +1,4 @@
-package com.healthydiet.healthydiet
+package com.healthydiet.healthydiet.service
 
 import com.healthydiet.healthydiet.models.Tag
 import com.healthydiet.healthydiet.models.TagRepository

@@ -1,6 +1,6 @@
 package com.healthydiet.healthydiet.controller
 
-import com.healthydiet.healthydiet.TagService
+import com.healthydiet.healthydiet.service.TagService
 import com.healthydiet.healthydiet.models.Tag
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
