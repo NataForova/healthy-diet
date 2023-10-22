@@ -29,6 +29,10 @@ dependencies {
     implementation("org.springframework.security:spring-security-oauth2-jose")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation ("de.mkammerer:argon2-jvm:2.1")
+    implementation ("org.bouncycastle:bcprov-jdk15on:1.68") // Use the appropriate version
+
+
     runtimeOnly("org.postgresql:postgresql")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

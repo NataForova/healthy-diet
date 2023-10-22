@@ -13,7 +13,13 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("api/recipes")
 class RecipeController(private val recipeService: RecipeService) {
     @GetMapping("/")
-    fun getListRecipe(@RequestParam page: Int, @RequestParam limit: Int) : ResponseBase<Recipe> = recipeService.listRecipe(page, limit)
+    fun getListRecipe(@RequestParam page: Int,
+                      @RequestParam limit: Int,
+                      @RequestParam isFavorite: Int?,
+                      @RequestParam isInShoppingCart: Int?,
+                      @RequestParam author: Int?,
+                      @RequestParam tags: List<Int?>,
+    ) : ResponseBase<Recipe> = recipeService.listRecipe(page, limit, isFavorite, isInShoppingCart, author, tags)
 
 
 }
