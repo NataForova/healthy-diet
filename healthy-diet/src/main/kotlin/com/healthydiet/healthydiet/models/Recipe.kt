@@ -24,6 +24,3 @@ class Recipe(val name: String, imageLink: String, text: String, cookingTime: Str
     var ingridients: MutableList<Ingredient> = mutableListOf();
 
 }
-interface RecipeRepository: CrudRepository<Recipe, Long> {
-    fun findAllBy(pageable: Pageable): Page<Recipe>
-}

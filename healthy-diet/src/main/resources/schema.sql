@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     password VARCHAR(255),
+    salt VARCHAR(255),
     is_subscribed BOOLEAN
 );
 CREATE TABLE IF NOT EXISTS tag (

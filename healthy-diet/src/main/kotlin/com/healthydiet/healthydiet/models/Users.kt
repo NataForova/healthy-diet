@@ -12,6 +12,7 @@ data class Users(val email : String,
                  val firstName: String,
                  val last_name: String,
                  var password: String,
+                 var salt: String,
                  val isSubscribed: Boolean) {
 
     @Id
@@ -19,6 +20,3 @@ data class Users(val email : String,
     var id: Long? = null
 }
 
-interface  UsersRepository : CrudRepository<Users, Long> {
-    fun findByEmail(email: String) : Users
-}

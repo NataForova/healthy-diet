@@ -1,7 +1,7 @@
 package com.healthydiet.healthydiet.service
 
 import com.healthydiet.healthydiet.models.Tag
-import com.healthydiet.healthydiet.models.TagRepository
+import com.healthydiet.healthydiet.repositories.TagRepository
 import org.springframework.stereotype.Service
 import java.io.IOException
 

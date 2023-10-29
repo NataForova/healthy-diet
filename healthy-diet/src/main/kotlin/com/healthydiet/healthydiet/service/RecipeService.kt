@@ -1,8 +1,8 @@
 package com.healthydiet.healthydiet.service
 
 import com.healthydiet.healthydiet.models.Recipe
-import com.healthydiet.healthydiet.models.RecipeRepository
 import com.healthydiet.healthydiet.models.response.ResponseBase
+import com.healthydiet.healthydiet.repositories.RecipeRepository
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service

@@ -1,6 +1,8 @@
 package com.healthydiet.healthydiet.models.request
 
-import com.fasterxml.jackson.annotation.JsonAlias
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
+import com.fasterxml.jackson.databind.annotation.JsonNaming
 
-data class ChangePasswordRequest(@JsonAlias("current_password")val oldPassword: String,
-                                 @JsonAlias("new_password")val newPassword: String)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+data class ChangePasswordRequest(val oldPassword: String,
+                                 val newPassword: String)

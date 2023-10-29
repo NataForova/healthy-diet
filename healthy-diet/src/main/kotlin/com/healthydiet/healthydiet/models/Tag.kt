@@ -7,5 +7,3 @@ import org.springframework.data.repository.CrudRepository
 
 @Table("tag")
 data class Tag (@Id var id: Int, var name: String, var color: String, var slug: String?)
-
-interface TagRepository : CrudRepository<Tag, Int>
